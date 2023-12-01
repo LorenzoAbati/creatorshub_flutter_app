@@ -27,7 +27,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 120.0),
@@ -88,7 +87,11 @@ class ChatListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chats'),
+        title: SizedBox(
+          height: 25, // Example height, adjust as needed.
+          child: Image.asset('assets/images/title.png', fit: BoxFit.contain),
+        ),
+        backgroundColor: Colors.red, // Add this line
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -275,6 +278,7 @@ class SearchPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
+        backgroundColor: Colors.red, // Add this line
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

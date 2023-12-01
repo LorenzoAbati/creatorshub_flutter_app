@@ -80,10 +80,12 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 const SizedBox(width: 8.0),
                 CircleAvatar(
+                  radius: 26, // Increase the radius for a larger button
                   backgroundColor: Colors.red,
                   child: IconButton(
+                    iconSize: 28, // Optionally increase the icon size
                     icon: const Icon(Icons.send, color: Colors.white),
-                    onPressed: sendMessage, // Updated to call sendMessage
+                    onPressed: sendMessage,
                   ),
                 ),
               ],
