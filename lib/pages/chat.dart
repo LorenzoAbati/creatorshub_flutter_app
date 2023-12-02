@@ -58,8 +58,22 @@ class _ChatPageState extends State<ChatPage> {
                           margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                           decoration: BoxDecoration(
                             color: index % 2 == 0 ? Colors.white.withOpacity(1) : Colors.red[400]?.withOpacity(1),
-                            borderRadius: BorderRadius.circular(12.0),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12.0),
+                              topRight: Radius.circular(12.0),
+                              bottomLeft: index % 2 == 0 ? Radius.circular(0) : Radius.circular(12.0),
+                              bottomRight: index % 2 == 0 ? Radius.circular(12.0) : Radius.circular(0),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
                           ),
+
                           child: Text(
                             messages[index],
                             style: TextStyle(color: Colors.black),
