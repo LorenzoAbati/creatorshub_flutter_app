@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+Map<String, List<String>> chatMessages = {};
+
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final String creatorId; // Identifier for the creator
+
+  const ChatPage({super.key, required this.creatorId});
 
   @override
   _ChatPageState createState() => _ChatPageState();
 }
+
 class _ChatPageState extends State<ChatPage> {
-  final List<String> messages = []; // Initialize as empty list
   final TextEditingController messageController = TextEditingController();
 
   void sendMessage() {
     setState(() {
-      if (messageController.text.isNotEmpty) {
-        messages.add(messageController.text);
+      final message = messageController.text;
+      if (message.isNotEmpty) {
+        final messages = chatMessages.putIfAbsent(widget.creatorId, () => []);
+        messages.add(message);
         messageController.clear();
       }
     });
@@ -21,6 +27,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final messages = chatMessages[widget.creatorId] ?? []; // Get messages for this creator
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -52,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                       child: Text(
                         messages[index],
-                        style: TextStyle(color: index % 2 == 0 ? Colors.white : Colors.white),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -80,10 +88,10 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 const SizedBox(width: 8.0),
                 CircleAvatar(
-                  radius: 26, // Increase the radius for a larger button
+                  radius: 26,
                   backgroundColor: Colors.red,
                   child: IconButton(
-                    iconSize: 28, // Optionally increase the icon size
+                    iconSize: 28,
                     icon: const Icon(Icons.send, color: Colors.white),
                     onPressed: sendMessage,
                   ),
@@ -98,7 +106,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
-    messageController.dispose(); // Dispose the controller when the widget is disposed
+    messageController.dispose();
     super.dispose();
   }
 }

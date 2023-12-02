@@ -79,7 +79,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
 class ChatListPage extends StatelessWidget {
   const ChatListPage({super.key});
 
@@ -88,10 +87,10 @@ class ChatListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
-          height: 25, // Example height, adjust as needed.
+          height: 25,
           child: Image.asset('assets/images/title.png', fit: BoxFit.contain),
         ),
-        backgroundColor: Colors.red, // Add this line
+        backgroundColor: Colors.red,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -102,10 +101,16 @@ class ChatListPage extends StatelessWidget {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () {
+              // ... showMenu code ...
+            },
+          ),
         ],
       ),
       body: ListView.builder(
-        itemCount: 20, // Replace with your data length
+        itemCount: 20,
         itemBuilder: (BuildContext context, int index) {
           return ChatListItem(
             name: 'Creator $index',
@@ -115,7 +120,7 @@ class ChatListPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ChatPage()),
+                MaterialPageRoute(builder: (context) => ChatPage(creatorId: 'Creator $index')),
               );
             },
           );
@@ -124,6 +129,7 @@ class ChatListPage extends StatelessWidget {
     );
   }
 }
+
 
 class ChatListItem extends StatelessWidget {
   final String name;
@@ -200,28 +206,28 @@ class CreatorDashboardPage extends StatelessWidget {
                 ),
               ),
             ),
-            Card(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            const Card(
+              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      'Wallet Balance',
+                      'Total Chats',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(height: 8),
                     Text(
-                      '\$9,782.42',
+                      '2834',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 16),
                     Text(
-                      'Cards Active',
+                      'Chats / day',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      '3',
+                      '54',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ],
