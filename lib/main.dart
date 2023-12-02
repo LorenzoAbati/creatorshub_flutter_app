@@ -79,6 +79,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
 class ChatListPage extends StatelessWidget {
   const ChatListPage({super.key});
 
@@ -90,7 +91,7 @@ class ChatListPage extends StatelessWidget {
           height: 25,
           child: Image.asset('assets/images/title.png', fit: BoxFit.contain),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.red[400],
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -104,32 +105,34 @@ class ChatListPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: () {
-              // ... showMenu code ...
+              // Additional actions
             },
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: 20,
-        itemBuilder: (BuildContext context, int index) {
-          return ChatListItem(
-            name: 'Creator $index',
-            message: 'Last message preview here',
-            time: '12:00 PM',
-            unreadCount: index % 3,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChatPage(creatorId: 'Creator $index')),
-              );
-            },
-          );
-        },
+      body: Container(
+        color: Colors.grey[100], // Light gray background for the chat list
+        child: ListView.builder(
+          itemCount: 20,
+          itemBuilder: (BuildContext context, int index) {
+            return ChatListItem(
+              name: 'Creator $index',
+              message: 'Last message preview here',
+              time: '12:00 PM',
+              unreadCount: index % 3,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatPage(creatorId: 'Creator $index')),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
 }
-
 
 class ChatListItem extends StatelessWidget {
   final String name;

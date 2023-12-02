@@ -61,6 +61,11 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/title.png
+    - assets/images/default_chat_background.png
+    - assets/images/cool_chat_bg.png
+    - assets/images/cool_chat_bg_bw.jpeg
+    - assets/images/cool_chat_bg_bw_new.jpeg
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
