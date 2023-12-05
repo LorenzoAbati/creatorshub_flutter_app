@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/chat.dart'; // Ensure this file exists with a ChatPage defined
+import 'pages/chat.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,15 +26,13 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 120.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // Assuming you have an image asset at "assets/images/logo.png"
             Image.asset('assets/images/logo.png', width: 230.0, height: 230.0),
             const SizedBox(height: 48),
             TextFormField(
@@ -79,12 +77,39 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-class ChatListPage extends StatelessWidget {
+class ChatListPage extends StatefulWidget {
   const ChatListPage({super.key});
 
   @override
+  _ChatListPageState createState() => _ChatListPageState();
+}
+
+class _ChatListPageState extends State<ChatListPage> {
+  Map<String, int> unreadCounts = {}; // A map to track unread counts for each chat
+
+  @override
+  void initState() {
+    super.initState();
+    initializeUnreadCounts();
+  }
+
+  void initializeUnreadCounts() {
+    // Initialize unreadCounts map with example data or fetch from a database
+    chatMessages.forEach((creatorId, messages) {
+      unreadCounts[creatorId] = messages.length % 3; // Example logic to set unread counts
+    });
+  }
+
+  void resetUnreadCount(String creatorId) {
+    setState(() {
+      unreadCounts[creatorId] = 0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List<String> chatKeys = chatMessages.keys.toList();
+
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
@@ -96,10 +121,7 @@ class ChatListPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SearchPage()),
-              );
+              // Search action
             },
           ),
           IconButton(
@@ -111,19 +133,25 @@ class ChatListPage extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: Colors.grey[100], // Light gray background for the chat list
+        color: Colors.grey[100],
         child: ListView.builder(
-          itemCount: 20,
+          itemCount: chatKeys.length,
           itemBuilder: (BuildContext context, int index) {
+            String creatorId = chatKeys[index];
+            List<String> messages = chatMessages[creatorId] ?? [];
+            String lastMessage = messages.isNotEmpty ? messages.last : "No messages";
+            int unreadCount = unreadCounts[creatorId] ?? 0;
+
             return ChatListItem(
               name: 'Creator $index',
-              message: 'Last message preview here',
+              message: lastMessage,
               time: '12:00 PM',
-              unreadCount: index % 3,
+              unreadCount: unreadCount,
               onTap: () {
+                resetUnreadCount(creatorId);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChatPage(creatorId: 'Creator $index')),
+                  MaterialPageRoute(builder: (context) => ChatPage(creatorId: creatorId)),
                 );
               },
             );
@@ -154,7 +182,6 @@ class ChatListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        // Replace with actual data
         backgroundImage: NetworkImage('https://via.placeholder.com/150'),
       ),
       title: Text(name),

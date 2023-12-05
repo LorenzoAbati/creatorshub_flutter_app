@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-Map<String, List<String>> chatMessages = {};
+Map<String, List<String>> chatMessages = {
+  // Example data
+  'Creator 1': ['Hello', 'How are you?'],
+  'Creator 2': ['Good morning'],
+  // Add more creators and messages as needed
+};
 
 class ChatPage extends StatefulWidget {
   final String creatorId; // Identifier for the creator
